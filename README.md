@@ -143,21 +143,32 @@ Linia poleceń ffmpeg składać się będzie z następujących poleceń:
   - nasz dźwięk ma mieć próbkowanie 44.1kHz, czyli analogiczne do spotykanego na płytach CD `-ar 44100` 
   - w formacie AAC straty przy bitrate `-b:a 128k` są nieznaczne. 
 * chcemy, aby nasz film miał informację o wszystkich klatkach kluczowych na początku pliku, a nie tak jak domyślnie na końcu `-movflags faststart`.
-* wskazujemy dokąd plik ma być kodowany `public/trailer_720p.mp4`
+* wskazujemy dokąd plik ma być kodowany `/g/video5/spotkanie_720p.mp4`
+* wszystko co podamy dalej spowoduje zakodowanie drugiego pliku wynikowego, dla nas: `-codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart public/spotkanie_360p.mp4`
+* dodatkowo chcemy wyeksportować obrazek, więc na końcu dodajmy kolejne opcje:
+  - nie potrzebujemy audio, więc `-an`
+  - kodek `-codec:v mjpeg` tworzy po prostu po jednym obrazku w formacie jpeg na każdą klatkę filmu
+  - chcemy wyciągnąć obrazek z 10tej sekundy filmy, więc `-ss 0:0:10.0`
+  - oczywiście interesuje nas jedna klatka, więc ustawiamy kombinację czasu i ilości klatek na sekundę odpowiednio `-t 1 -r 1`.
+  - interesują nas jeszcze rozmiary tego obrazka, powiedzmy `-s 320x180`
+  - nazwiemy go `/g/video5/spotkanie_preview.jpg`
 
-Wszystko co podamy dalej spowoduje zakodowanie drugiego pliku wynikowego, dla nas: `-codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart public/trailer_360p.mp4`
+    ffmpeg -i trailer_1080p.ogg -threads 2 -codec:v libx264 -s 1280x720 -q 5 -preset medium -b:v 1536k -g 120 -keyint_min 5 -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 128k -movflags faststart /g/video5/spotkanie_720p.mp4 -codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart /g/video5/spotkanie_360p.mp4
 
-    ffmpeg -i trailer_1080p.ogg -threads 2 -codec:v libx264 -s 1280x720 -q 5 -preset medium -b:v 1536k -g 120 -keyint_min 5 -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 128k -movflags faststart public/trailer_720p.mp4 -codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart public/trailer_360p.mp4
 
 Apache
 ========
 
-Pozostaje nam skonfigurowanie apache:
+Pozostaje nam skonfigurowanie apache - to najpopularniejszy serwer HTTP i choć nie najprostszy, na pewno na 99% serwerów na których będziecie pracować będzie on domyślnie zainstalowany.
 
-        Alias /video /media/sf_share/public
-        <Directory /media/sf_share/public>
+Oczywiście, każdy wybiera swoje własne weapon of choice.
+
+        Alias /video5 /g/video5
+        <Directory /g/video5>
                 Options -Indexes
                 AllowOverride none
                 Order allow,deny
                 allow from all
         <Directory>
+
+Zdefiniowaliśmy alias do podstrony 
