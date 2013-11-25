@@ -153,8 +153,9 @@ Linia poleceń ffmpeg składać się będzie z następujących poleceń:
   - interesują nas jeszcze rozmiary tego obrazka, powiedzmy `-s 320x180`
   - nazwiemy go `/g/video5/spotkanie_preview.jpg`
 
-    ffmpeg -i trailer_1080p.ogg -threads 2 -codec:v libx264 -s 1280x720 -q 5 -preset medium -b:v 1536k -g 120 -keyint_min 5 -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 128k -movflags faststart /g/video5/spotkanie_720p.mp4 -codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart /g/video5/spotkanie_360p.mp4
+Nasza linia poleceń będzie wyglądać następująco:
 
+    ffmpeg -i trailer_1080p.ogg -threads 2 -codec:v libx264 -s 1280x720 -q 5 -preset medium -b:v 1536k -g 120 -keyint_min 5 -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 128k -movflags faststart /g/video5/spotkanie_720p.mp4 -codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart /g/video5/spotkanie_360p.mp4
 
 Apache
 ========
