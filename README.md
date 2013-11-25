@@ -26,7 +26,7 @@ Ponieważ nasz ffmpeg i kodeki korzystają z bardzo szybkich optymalizacji w ass
 
 Aby system zauważył, że YASM jest już dostępny musimy ponownie załadować profil użytkownika (uruchomić skrypt shellowy uruchamiany po zalogowaniu użytkownika).
 
-    . ~/.profile 
+    . ~/.profile
 
 Instalacja programów enkodujących
 ===================================
@@ -81,7 +81,7 @@ MP3 - znany chyba wszystkim kodek audio Mpeg Layer-3.
 FFMpeg
 --------
 
-FFMpeg to kombajn do przekodowywania filmów z jednego formatu na drugi, trzeciego na czwarty, dokładania piątego filmu w tle, łączenia z szóstym, dogrywania ścieżki audio z siódmego, dodania obrazka w górnym lewym rogu ekranu... i tak dalej... 
+FFMpeg to kombajn do przekodowywania filmów z jednego formatu na drugi, trzeciego na czwarty, dokładania piątego filmu w tle, łączenia z szóstym, dogrywania ścieżki audio z siódmego, dodania obrazka w górnym lewym rogu ekranu... i tak dalej...
 
     git clone --depth 1 git://source.ffmpeg.org/ffmpeg
     cd ffmpeg/
@@ -136,12 +136,12 @@ Linia poleceń ffmpeg składać się będzie z następujących poleceń:
   - wskażemy oczekiwany poziom jakości kodowania za pomocą `-q 5`
   - podamy preset, czyli jak bardzo x264 ma starać się zachować jakość, powiedzmy, że medium `-preset medium`
   - podamy interesujący nas bitrate wideo `-b:v 1536k` - oznacza to, że każda sekunda zajmie przeciętnie 1536k bitów, co daje 192 kB na samo wideo.
-  - chcemy, aby klatka kluczowa była zawarta raz na conajmniej 4 sekundy `-g 120` i nie częściej niż co 5 klatek `-keyint_min 5` 
+  - chcemy, aby klatka kluczowa była zawarta raz na conajmniej 4 sekundy `-g 120` i nie częściej niż co 5 klatek `-keyint_min 5`
 * następnie deniniujemy audio:
   - użyjmy przed chwilą skompilowanego kodeka AAC `-codec:a libfdk_aac`
-  - chcemy zakodować dwa kanały (stereo) `-ac 2` 
-  - nasz dźwięk ma mieć próbkowanie 44.1kHz, czyli analogiczne do spotykanego na płytach CD `-ar 44100` 
-  - w formacie AAC straty przy bitrate `-b:a 128k` są nieznaczne. 
+  - chcemy zakodować dwa kanały (stereo) `-ac 2`
+  - nasz dźwięk ma mieć próbkowanie 44.1kHz, czyli analogiczne do spotykanego na płytach CD `-ar 44100`
+  - w formacie AAC straty przy bitrate `-b:a 128k` są nieznaczne.
 * chcemy, aby nasz film miał informację o wszystkich klatkach kluczowych na początku pliku, a nie tak jak domyślnie na końcu `-movflags faststart`.
 * wskazujemy dokąd plik ma być kodowany `/g/video5/spotkanie_720p.mp4`
 * wszystko co podamy dalej spowoduje zakodowanie drugiego pliku wynikowego, dla nas: `-codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart public/spotkanie_360p.mp4`
@@ -155,7 +155,7 @@ Linia poleceń ffmpeg składać się będzie z następujących poleceń:
 
 Nasza linia poleceń będzie wyglądać następująco:
 
-    ffmpeg -i trailer_1080p.ogg -threads 2 -codec:v libx264 -s 1280x720 -q 5 -preset medium -b:v 1536k -g 120 -keyint_min 5 -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 128k -movflags faststart /g/video5/spotkanie_720p.mp4 -codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart /g/video5/spotkanie_360p.mp4
+    ffmpeg -i trailer_1080p.ogg -threads 4 -codec:v libx264 -s 1280x720 -q 5 -preset medium -b:v 1536k -g 120 -keyint_min 5 -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 128k -movflags faststart /g/video5/spotkanie_720p.mp4 -codec:v libx264 -s 640x360 -q 5 -preset medium -g 120 -keyint_min 5 -b:v 700k -codec:a libfdk_aac -ac 2 -ar 44100 -b:a 64k -movflags faststart /g/video5/spotkanie_360p.mp4 -an -codec:v mjpeg -ss 0:0:10.0 -t 1 -r 1 -s 320x180 /g/video5/spotkanie_preview.jpg
 
 Apache
 ========
@@ -172,4 +172,4 @@ Oczywiście, każdy wybiera swoje własne weapon of choice.
                 allow from all
         <Directory>
 
-Zdefiniowaliśmy alias do podstrony 
+Zdefiniowaliśmy alias do podstrony
