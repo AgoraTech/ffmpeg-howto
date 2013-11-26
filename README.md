@@ -98,6 +98,8 @@ Po skompilowaniu wszystkich narzędzi możemy przejść do kodowania naszego mat
 
 Nagrałem film z poprzedniej prezentacji Kamila, będzie on naszym źródłem.
 
+Wszystkie filmy przekodujemy do katalogu /g/video5, musimy go założyć `sudo mkdir -p /g/video5 && sudo chown -R michal /g`
+
 Identyfikacja
 ---------------
 
@@ -172,4 +174,4 @@ Oczywiście, każdy wybiera swoje własne weapon of choice.
                 allow from all
         <Directory>
 
-Zdefiniowaliśmy alias do podstrony
+Zdefiniowaliśmy alias do wirtualnego katalogu na serwerze na nasz dysk i już możemy oglądać wideo, choćby pod adresem: `http://mydomain.com/video5/spotkanie_360p.mp4`.
